@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jiepi.dao.AdDao">
+    <select id="searchByPage" resultType="Ad">
+        SELECT id,title,img_file_name,link ,weight from ad
+         <where>
+              <if test="title !=null and title !=''">
+                  title like '%'title '%'
+              </if>
+         </where>
+        order by weight desc ,id
+
+    </select>
+
+    <insert id="insert">
+        INSERT into ad(id,title,img_file_name,link ,weight)
+        values(#{title},#{imgFileName},#{link},#{weight})
+    </insert>
+
+</mapper>
