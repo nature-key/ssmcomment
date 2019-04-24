@@ -1,4 +1,4 @@
-package org.imooc.constant;
+package com.jiepi.constant;
 
 /**
  * 商户类别相关常量定义

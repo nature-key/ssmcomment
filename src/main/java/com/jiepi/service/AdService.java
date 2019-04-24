@@ -9,6 +9,10 @@ public interface AdService {
 
     List<AdDto>  searchByPage(AdDto adDto);
 
+     boolean add(AdDto adDto);
 
+     int remove(String id);
+
+     AdDto find(String id);
 
 }

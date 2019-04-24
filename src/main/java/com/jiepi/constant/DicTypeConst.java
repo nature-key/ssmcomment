@@ -1,4 +1,4 @@
-package org.imooc.constant;
+package com.jiepi.constant;
 
 /**
  * 字典表--类型定义

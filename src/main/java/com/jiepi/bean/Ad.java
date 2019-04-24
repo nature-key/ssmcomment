@@ -40,4 +40,5 @@ public class Ad extends BaseBean {
     public void setWeight(Long weight) {
         this.weight = weight;
     }
+    
 }

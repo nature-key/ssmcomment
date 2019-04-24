@@ -5,7 +5,8 @@ target/
 out/
 !.mvn/wrapper/maven-wrapper.jar
 classes/
-*.depend
+*.depend.
+
 
 ### STS ###
 .apt_generated

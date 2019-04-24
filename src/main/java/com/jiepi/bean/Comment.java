@@ -1,9 +1,9 @@
-package org.imooc.bean;
-
-import java.util.Date;
+package com.jiepi.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import java.util.Date;
 
 @JsonInclude(Include.NON_NULL)
 public class Comment extends BaseBean {

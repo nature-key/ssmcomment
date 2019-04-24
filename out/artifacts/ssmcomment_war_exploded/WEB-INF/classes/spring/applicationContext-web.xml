@@ -13,11 +13,11 @@
     <!-- 允许对静态资源文件的访问 -->
     <mvc:default-servlet-handler/>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/jsp"/>
-        <property name="suffix" value=".jsp"></property>
-    </bean>
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <!--<property name="prefix" value="/WEB-INF/jsp"/>-->
+        <!--<property name="suffix" value=".jsp"></property>-->
+    <!--</bean>-->
 
     <!-- 自动扫描的包名 -->
     <context:component-scan base-package="com.jiepi.controller"/>

@@ -1,4 +1,4 @@
-package org.imooc.bean;
+package com.jiepi.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

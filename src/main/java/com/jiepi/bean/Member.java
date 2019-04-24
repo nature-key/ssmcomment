@@ -1,4 +1,4 @@
-package org.imooc.bean;
+package com.jiepi.bean;
 
 public class Member {
 	

@@ -1,10 +1,10 @@
-package org.imooc.dto;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.jiepi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonInclude(Include.NON_NULL)
 public class BusinessListDto {

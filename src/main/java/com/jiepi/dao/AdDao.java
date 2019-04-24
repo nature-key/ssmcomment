@@ -10,4 +10,8 @@ public interface AdDao {
     List<AdDto>  searchByPage(Ad ad);
 
     int  insert(Ad ad);
+
+    int remove(String id);
+
+    AdDto searchById(String id);
 }

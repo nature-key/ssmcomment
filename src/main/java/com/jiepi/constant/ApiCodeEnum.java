@@ -1,4 +1,4 @@
-package org.imooc.constant;
+package com.jiepi.constant;
 
 public enum ApiCodeEnum {
     SUCCESS(0,"ok"),
@@ -14,7 +14,7 @@ public enum ApiCodeEnum {
     private Integer errno;
     private String msg;
     
-    ApiCodeEnum(Integer errno,String msg) {
+    ApiCodeEnum(Integer errno, String msg) {
 	this.errno = errno;
 	this.msg = msg;
     }

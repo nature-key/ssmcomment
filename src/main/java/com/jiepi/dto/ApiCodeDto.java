@@ -1,9 +1,8 @@
-package org.imooc.dto;
-
-import org.imooc.constant.ApiCodeEnum;
+package com.jiepi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.jiepi.constant.ApiCodeEnum;
 
 @JsonInclude(Include.NON_NULL)
 public class ApiCodeDto {

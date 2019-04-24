@@ -1,12 +1,11 @@
-package org.imooc.util;
+package com.jiepi.util;
 
-import java.util.List;
-import java.util.UUID;
+//import org.imooc.constant.SessionKeyConst;
+//import org.imooc.dto.ActionDto;
 
 import javax.servlet.http.HttpSession;
-
-import org.imooc.constant.SessionKeyConst;
-import org.imooc.dto.ActionDto;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 共通工具类.
@@ -53,21 +52,21 @@ public class CommonUtil {
 	 * @param method http动作
 	 * @return true:包含，false：不包含
 	 */
-	public static boolean contains(HttpSession session,String url,String method) {
-		Object obj = session.getAttribute(SessionKeyConst.ACTION_INFO);
-		if(obj != null) {
-			@SuppressWarnings("unchecked")
-			List<ActionDto> dtoList = (List<ActionDto>)obj;
-			for(ActionDto actionDto : dtoList) {
-				if(!isEmpty(actionDto.getMethod()) && !actionDto.getMethod().equals(method)) {
-					continue;
-				}
-				if(!url.matches(actionDto.getUrl())) {
-					continue;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
+//	public static boolean contains(HttpSession session,String url,String method) {
+//		Object obj = session.getAttribute(SessionKeyConst.ACTION_INFO);
+//		if(obj != null) {
+//			@SuppressWarnings("unchecked")
+//			List<ActionDto> dtoList = (List<ActionDto>)obj;
+//			for(ActionDto actionDto : dtoList) {
+//				if(!isEmpty(actionDto.getMethod()) && !actionDto.getMethod().equals(method)) {
+//					continue;
+//				}
+//				if(!url.matches(actionDto.getUrl())) {
+//					continue;
+//				}
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 }

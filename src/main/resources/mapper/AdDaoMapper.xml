@@ -17,8 +17,16 @@
     </select>
 
     <insert id="insert">
-        INSERT into ad(id,title,img_file_name,link ,weight)
+        INSERT into ad(title,img_file_name,link ,weight)
         values(#{title},#{imgFileName},#{link},#{weight})
     </insert>
+
+    <select id="searchById"  resultType="com.jiepi.dto.AdDto">
+        SELECT  *  from  ad where id=#{id}
+    </select>
+
+    <delete id="remove" parameterType="java.lang.String">
+        delete from ad where id=#{id}
+    </delete>
 
 </mapper>
