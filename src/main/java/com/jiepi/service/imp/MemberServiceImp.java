@@ -48,4 +48,24 @@ public class MemberServiceImp implements MemberService {
         TokenCache instance1 = TokenCache.getInstance();
         instance1.save(token, phone);
     }
+
+    public Long getIdByPhone(Long phone) {
+        Member member = new Member();
+        member.setPhone(phone);
+
+        List<Member> select = memberDao.select(member);
+
+        if (select.size() > 0) {
+            return select.get(0).getId();
+        }
+        return null;
+
+    }
+
+
+    @Override
+    public Long getPhone(String token) {
+        TokenCache instance1 = TokenCache.getInstance();
+        return instance1.getPhone(token);
+    }
 }

@@ -79,7 +79,8 @@
     </select>
 
     <select id="selectLikeByPage" resultType="Business">
-        select id,img_file_name,title,subtitle,price,distance,number,`desc`,city,category,star_total_num,comment_total_num
+        select
+        id,img_file_name,title,subtitle,price,distance,number,`desc`,city,category,star_total_num,comment_total_num
         from business
         <where>
             <if test="title != null and title != ''
@@ -98,6 +99,22 @@
         order by id
 
     </select>
+
+
+    <update id="updateNumber">
+        UPDATE business b, (SELECT
+        business_id,
+        count(*) cou
+        FROM orders
+        where create_time &lt;= #{endTime}
+        <if test="startTime !=null">
+            and create_time &gt;#{startTime}
+        </if>
+        GROUP BY business_id ) c
+        SET b.number = b.number + c.cou
+        WHERE b.id = c.business_id
+    </update>
+
 
 </mapper>
 

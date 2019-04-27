@@ -13,4 +13,8 @@ public interface MemberService {
 
     public String getCode(Long phone);
     public void saveToken(String token, Long phone);
+
+    public Long getIdByPhone(Long phone);
+
+    Long getPhone(String token);
 }

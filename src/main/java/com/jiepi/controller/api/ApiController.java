@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jiepi.bean.BusinessList;
 import com.jiepi.constant.ApiCodeEnum;
-import com.jiepi.dto.AdDto;
-import com.jiepi.dto.ApiCodeDto;
-import com.jiepi.dto.BusinessDto;
-import com.jiepi.dto.BusinessListDto;
+import com.jiepi.dto.*;
 import com.jiepi.service.BusinessService;
+import com.jiepi.service.CommentService;
 import com.jiepi.service.MemberService;
+import com.jiepi.service.OrderService;
 import com.jiepi.service.imp.AdServiceImp;
 import com.jiepi.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class ApiController {
     @Resource
     private BusinessService businessService;
 
+    @Autowired
+    private OrderService orderService;
+
     @Value("${ad.number}")
     private int adNumber;
 
@@ -42,6 +44,9 @@ public class ApiController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(value = "/homead", method = RequestMethod.GET)
     public List<AdDto> homead() throws Exception {
@@ -64,13 +69,13 @@ public class ApiController {
 //        });
     }
 
-    @RequestMapping(value = "submitComment", method = RequestMethod.POST)
-    public Map<String, Object> submitComment() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("errno", 0);
-        map.put("msg", "ok");
-        return map;
-    }
+//    @RequestMapping(value = "submitComment", method = RequestMethod.POST)
+//    public Map<String, Object> submitComment() {
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("errno", 0);
+//        map.put("msg", "ok");
+//        return map;
+//    }
 
     @RequestMapping(value = "/sms", method = RequestMethod.POST)
     public ApiCodeDto sms(@RequestParam Long phone) {
@@ -110,4 +115,47 @@ public class ApiController {
         return apiCodeDto;
 
     }
+
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public ApiCodeDto order(@RequestBody OrdreForBuyDto ordreForBuyDto) {
+        ApiCodeDto apiCodeDto;
+        Long phone = memberService.getPhone(ordreForBuyDto.getToken());
+        if (phone != null && phone.equals(ordreForBuyDto.getUsername())) {
+            Long memberId = memberService.getIdByPhone(ordreForBuyDto.getUsername());
+            OrderDto orderDto = new OrderDto();
+            orderDto.setBusinessId(ordreForBuyDto.getId());
+            orderDto.setMemberId(memberId);
+            orderDto.setNum(ordreForBuyDto.getNum());
+            orderDto.setPrice(ordreForBuyDto.getPrice());
+            orderService.add(orderDto);
+            apiCodeDto = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+        } else {
+            apiCodeDto = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
+        }
+        return apiCodeDto;
+
+    }
+
+    @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
+    public ApiCodeDto submitComment(@RequestBody CommentForSubmitDto commentForSubmitDto) {
+
+        ApiCodeDto apiCodeDto;
+        Long phone = memberService.getPhone(commentForSubmitDto.getToken());
+        if (phone != null && phone.equals(commentForSubmitDto.getUsername())) {
+            Long memberId = memberService.getIdByPhone(phone);
+            OrderDto orderDto = orderService.selectById(commentForSubmitDto.getId());
+            if (orderDto.getMemberId().equals(memberId)) {
+                commentService.add(commentForSubmitDto);
+                apiCodeDto = new ApiCodeDto(ApiCodeEnum.SUCCESS);
+            } else {
+                apiCodeDto = new ApiCodeDto(ApiCodeEnum.NO_AUTH);
+            }
+
+
+        } else {
+            apiCodeDto = new ApiCodeDto(ApiCodeEnum.NOT_LOGGED);
+        }
+        return apiCodeDto;
+    }
+
 }
