@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jiepi.dao.GroupDao">
+    
+    <select id="select" resultType="Group">
+        SELECT *  from sys_group t
+        <where>
+            <if test="name!=null">
+                and name =#{name}
+            </if>
+        </where>        
+        order by convert(name using gbk) collate gbk_chinese_ci
+    </select>
+    
+    <delete id="delete">
+        DELETE  from sys_group where id=#{_parameter}
+    </delete>
+    <select id="selectById" resultType="Group">
+        SELECT  *  from  sys_group where id=#{_parameter}
+    </select>
+    <insert id="insert">
+        insert into  sys_group(name)
+                SELECT #{name} from dual
+        where not exists(select 1 from sys_group where name=#{name})
+    </insert>
+
+    <update id="update" parameterType="Group">
+        UPDATE  sys_group
+        <set>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+        </set>
+        WHERE id=#{id}
+        and not exist(select 1 from(select 1 from sys_group where name=#{name} and id!=#{id})a)
+    </update>
+    
+</mapper>
+
