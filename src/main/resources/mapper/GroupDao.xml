@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jiepi.dao.GroupDao">
-    
+    <resultMap id="GroupMenuMap" type="Group">
+        <id column="id" property="id"/>
+        <id column="name" property="name"/>
+        <collection property="menuList" javaType="list" ofType="Menu">
+            <result column="menu_id" property="id"/>
+            <result column="menu_name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="order_num" property="orderNum"/>
+        </collection>
+    </resultMap>
     <select id="select" resultType="Group">
         SELECT *  from sys_group t
         <where>
@@ -34,6 +44,14 @@
         WHERE id=#{id}
         and not exist(select 1 from(select 1 from sys_group where name=#{name} and id!=#{id})a)
     </update>
+
+    <select id="selectMenuByGroupId" resultMap="GroupMenuMap">
+        SELECT  g.id,g.name,m.name menu_name ,m.url,m.parent_id,m.order_num from sys_group g
+        LEFT JOIN sys_group_menu gm on g.id=gm.group_id
+        LEFT JOIN sys_menu m on gm.menu_id=m.id
+        where g.id=#{_parameter}
+        ORDER BY  m.order_num
+    </select>
     
 </mapper>
 

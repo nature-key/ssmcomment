@@ -51,4 +51,11 @@ public class GroupController {
         return i;
     }
 
+    @RequestMapping(value = "/selectMenu", method = RequestMethod.POST)
+    public GroupDto find(@RequestParam Long id) {
+        GroupDto groupDto = groupService.selectMenuByGroupId(id);
+        return groupDto;
+
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.jiepi.service.imp;
 
+import com.jiepi.bean.Action;
 import com.jiepi.bean.Menu;
 import com.jiepi.dao.MenuDao;
 import com.jiepi.dto.MenuDto;
 import com.jiepi.dto.MenuForMoveDto;
+import com.jiepi.dto.MenuForZtreeDto;
 import com.jiepi.service.MenuService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,5 +99,31 @@ public class MenuServiceImp implements MenuService {
 
         }
         return 1;
+    }
+
+
+    @Override
+    public List<MenuForZtreeDto> getZtreeList() {
+        List<MenuForZtreeDto> result = new ArrayList<>();
+        List<Menu> menus = menuDao.selectWithAction(new Menu());
+        for (Menu menu : menus) {
+            MenuForZtreeDto menuForZtreeDto= new MenuForZtreeDto();
+            result.add(menuForZtreeDto);
+            BeanUtils.copyProperties(menu,menuForZtreeDto);
+            menuForZtreeDto.setOpen(true);
+            menuForZtreeDto.setComboId(MenuForZtreeDto.PREFIX_MENU+menu.getId());
+            menuForZtreeDto.setComboParentId(MenuForZtreeDto.PREFIX_MENU+menu.getParentId());
+            for (Action action:menu.getActionList()
+                 ) {
+                menuForZtreeDto = new MenuForZtreeDto();
+                result.add(menuForZtreeDto);
+                menuForZtreeDto.setComboId(MenuForZtreeDto.PREFIX_ACTION + action.getId());
+                menuForZtreeDto.setComboParentId(MenuForZtreeDto.PREFIX_MENU + action.getMenuId());
+                menuForZtreeDto.setName(action.getName());
+                menuForZtreeDto.setId(action.getId());
+                menuForZtreeDto.setParentId(action.getMenuId());
+            }
+        }
+        return result;
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jiepi.dao.MenuDao">
+
+
+
     <insert id="insert">
         INSERT INTO sys_menu (name, url, parent_id, order_num)
             SELECT
@@ -79,5 +82,32 @@
                           ) a
                      WHERE t.parent_id = a.parent_id AND t.order_num > a.order_num)
     </update>
+
+
+    <select id="selectWithAction" resultMap="MenuResultMap">
+        select m.id,m.name,m.url,m.parent_id,a.name action_name
+        ,a.url action_url,a.menu_id action_menu_id,a.id action_id,a.method
+        from sys_menu m LEFT JOIN sys_action a on a.menu_id=m.id
+        <where>
+            <if test="parentId!=null">
+                and m.parent_id=#{parentId}
+            </if>
+        </where>
+        order by m.order_num,convert(a.name using gbk) collate gbk_chinese_ci
+    </select>
+
+    <resultMap type="Menu" id="MenuResultMap">
+        <id column="id" property="id"/>
+        <id column="name" property="name"/>
+        <id column="url" property="url"/>
+        <id column="parent_id" property="parentId"/>
+        <collection property="actionList" javaType="list" ofType="Action">
+            <id column="action_id" property="id"/>
+            <result column="action_name" property="name"/>
+            <result column="action_url" property="url"/>
+            <result column="action_menu_id" property="menuId"/>
+            <result column="method" property="method"/>
+        </collection>
+    </resultMap>
 </mapper>
 

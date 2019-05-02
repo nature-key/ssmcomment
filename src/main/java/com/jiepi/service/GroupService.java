@@ -20,5 +20,7 @@ public interface GroupService {
 
     int assignMenu(GroupDto groupDto);
 
+    GroupDto selectMenuByGroupId(Long id);
+
 
 }

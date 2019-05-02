@@ -2,6 +2,7 @@ package com.jiepi.service;
 
 import com.jiepi.dto.MenuDto;
 import com.jiepi.dto.MenuForMoveDto;
+import com.jiepi.dto.MenuForZtreeDto;
 
 import java.util.List;
 
@@ -43,4 +44,7 @@ public interface MenuService {
      * @return
      */
     int order(MenuForMoveDto menuForMoveDto);
+
+    List<MenuForZtreeDto>  getZtreeList();
+
 }

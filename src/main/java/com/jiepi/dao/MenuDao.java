@@ -45,4 +45,6 @@ public interface MenuDao {
     int updateOrderNumById(Long id);
 
     Menu selectById(Long id);
+
+    List<Menu> selectWithAction(Menu menu);
 }

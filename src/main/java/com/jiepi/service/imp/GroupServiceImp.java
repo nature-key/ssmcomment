@@ -87,4 +87,12 @@ public class GroupServiceImp implements GroupService {
         }
         return 0;
     }
+
+    @Override
+    public GroupDto selectMenuByGroupId(Long id) {
+        GroupDto groupDto = new GroupDto();
+        Group group = groupDao.selectMenuByGroupId(id);
+        BeanUtils.copyProperties(group, groupDto);
+        return groupDto;
+    }
 }

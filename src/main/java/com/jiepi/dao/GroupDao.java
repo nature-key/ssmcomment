@@ -17,4 +17,6 @@ public interface GroupDao {
     int update(Group group);
 
     Group selectMenuListById(Long id);
+
+    Group selectMenuByGroupId(Long id);
 }
